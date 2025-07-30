@@ -1,0 +1,51 @@
+:root {
+  --react-primary: #646cff;
+  --react-primary-hover: #535bf2;
+  --react-bg: rgba(255, 255, 255, 0.95);
+  --react-text: #213547;
+  --react-border: rgba(0, 0, 0, 0.1);
+  --react-shadow: rgba(0, 0, 0, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.react-overlay {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.react-overlay > * {
+  pointer-events: auto;
+}
+
+button {
+  font-family: inherit;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: var(--react-text);
+  background-color: var(--react-bg);
+  border: 1px solid var(--react-border);
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+button:hover {
+  background-color: var(--react-primary);
+  color: white;
+  box-shadow: 0 4px 8px var(--react-shadow);
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+} 

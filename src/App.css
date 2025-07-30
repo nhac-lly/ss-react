@@ -1,0 +1,131 @@
+.react-ui-top-left {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+}
+
+.react-info-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.loading-bar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  background: var(--react-bg);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--react-border);
+  padding: 16px 20px;
+  animation: slideInFromBottom 0.5s ease-out;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.loading-bar-container.fade-out {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.loading-bar-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.loading-bar-label {
+  font-size: 0.9em;
+  color: var(--react-text);
+  margin-bottom: 8px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.loading-bar-track {
+  height: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.loading-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--react-primary), var(--react-primary-hover));
+  border-radius: 4px;
+  transition: width 0.3s ease, background 0.5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-bar-fill.completed {
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+}
+
+.loading-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+.loading-bar-percentage {
+  font-size: 0.8em;
+  color: var(--react-text);
+  text-align: center;
+  font-weight: 600;
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (max-width: 768px) {
+  .loading-bar-container {
+    padding: 12px 16px;
+  }
+  
+  .loading-bar-label {
+    font-size: 0.85em;
+    margin-bottom: 6px;
+  }
+  
+  .loading-bar-track {
+    height: 6px;
+    margin-bottom: 6px;
+  }
+  
+  .loading-bar-percentage {
+    font-size: 0.75em;
+  }
+} 
