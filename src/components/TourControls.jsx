@@ -4,6 +4,7 @@ import './TourControls.css'
 const TourControls = () => {
   const [currentView, setCurrentView] = useState('default')
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isAudioMuted, setIsAudioMuted] = useState(false)
   const viewer = window.WALK.getViewer()
 
   useEffect(() => {
@@ -45,6 +46,31 @@ const TourControls = () => {
     }
   }
 
+  const toggleAudio = () => {
+    // Get all audio and video elements in the document
+    const audioElements = document.querySelectorAll('audio')
+    const videoElements = document.querySelectorAll('video')
+    
+    const allMediaElements = [...audioElements, ...videoElements]
+    
+    if (allMediaElements.length > 0) {
+      const newMutedState = !isAudioMuted
+      
+      // Mute/unmute all audio and video elements
+      allMediaElements.forEach(element => {
+        element.muted = newMutedState
+      })
+      
+      setIsAudioMuted(newMutedState)
+    } else {
+      // Fallback: try to control via WALK API if available
+      if (window.WALK) {
+        // Toggle the new muted state
+        setIsAudioMuted(!isAudioMuted)
+      }
+    }
+  }
+
   const takeScreenshot = () => {
     // Use WALK API to take screenshot
     if (window.WALK) {
@@ -71,6 +97,14 @@ const TourControls = () => {
           title="Reset View"
         >
           🏠
+        </button>
+
+        <button 
+          className={`control-btn ${isAudioMuted ? 'active' : ''}`}
+          onClick={toggleAudio}
+          title={isAudioMuted ? 'Unmute Audio' : 'Mute Audio'}
+        >
+          {isAudioMuted ? '🔇' : '🔊'}
         </button>
 
         <button 
