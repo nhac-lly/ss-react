@@ -124,9 +124,9 @@ const TourControls = () => {
         </button>
       </div>
 
-      <div className="view-indicator">
+      {/* <div className="view-indicator">
         <span className="view-label">View: {currentView}</span>
-      </div>
+      </div> */}
     </div>
   )
 }
