@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import './TourControls.css'
 
 const TourControls = () => {
-  const [isAudioEnabled, setIsAudioEnabled] = useState(false)
   const [currentView, setCurrentView] = useState('default')
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const viewer = window.WALK.getViewer()
 
   useEffect(() => {
     // Listen for fullscreen changes
@@ -16,22 +16,23 @@ const TourControls = () => {
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange)
   }, [])
 
-  const toggleAudio = () => {
-    setIsAudioEnabled(!isAudioEnabled)
-    // Here you could integrate with the WALK engine audio system
-    if (window.WALK && window.WALK.audio) {
-      if (isAudioEnabled) {
-        window.WALK.audio.mute()
+  const toggleMap = () => {
+    if (window.WALK) {
+      const viewer = window.WALK.getViewer()
+      if (viewer.isMinimapEnabled()) {
+        viewer.disableMinimap()
       } else {
-        window.WALK.audio.unmute()
+        viewer.enableMinimap()
       }
     }
   }
 
   const resetView = () => {
     // Reset to initial camera position using WALK API
-    if (window.WALK && window.WALK.camera) {
+    if (window.WALK) {
       setCurrentView('default')
+      const viewer = window.WALK.getViewer()
+      viewer.switchToView("view")
       // You could implement specific view reset logic here
     }
   }
@@ -46,8 +47,10 @@ const TourControls = () => {
 
   const takeScreenshot = () => {
     // Use WALK API to take screenshot
-    if (window.WALK && window.WALK.screenshot) {
-      window.WALK.screenshot()
+    if (window.WALK) {
+      const viewer = window.WALK.getViewer()
+      console.log('Viewer', viewer)
+      viewer.captureImage()
     }
   }
 
@@ -55,11 +58,11 @@ const TourControls = () => {
     <div className="tour-controls">
       <div className="controls-group">
         <button 
-          className={`control-btn ${isAudioEnabled ? 'active' : ''}`}
-          onClick={toggleAudio}
-          title={isAudioEnabled ? 'Mute Audio' : 'Enable Audio'}
+          className={`control-btn ${viewer.isMinimapEnabled() ? 'active' : ''}`}
+          onClick={toggleMap}
+          title={viewer.isMinimapEnabled() ? 'Disable Map' : 'Enable Map'}
         >
-          🔊
+          🧭
         </button>
 
         <button 
